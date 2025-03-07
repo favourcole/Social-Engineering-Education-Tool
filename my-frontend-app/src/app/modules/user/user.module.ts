@@ -1,18 +1,37 @@
-// In src/app/modules/user/user.module.ts
+import { Component, OnInit } from '@angular/core';
+import { DataService } from '../../services/data.service';
 
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { UserComponent } from '../../components/user/user.component';
-import { UserRoutingModule } from './user-routing.module'; // Ensures routing is set up
-import { DashboardComponent } from '../../components/dashboard/dashboard.component';
-
-@NgModule({
-  declarations: [
-    UserComponent, DashboardComponent
-  ],
-  imports: [
-    CommonModule,
-    UserRoutingModule // Connect the routes by importing UserRoutingModule
-  ]
+@Component({
+  selector: 'app-user',
+  templateUrl: './user.component.html',
+  styleUrls: ['./user.component.scss']
 })
-export class UserModule { }
+export class UserComponent implements OnInit {
+  username: string = '';
+  submitted: boolean = false;
+  userData: any = {};
+  users: any[] = [];
+
+  constructor(private dataService: DataService) { }
+
+  ngOnInit(): void {
+    this.loadUsers();
+  }
+
+  loadUsers(): void {
+    this.dataService.getUsers().subscribe({
+      next: (data) => {
+        this.users = data;
+        console.log('Users loaded:', this.users);
+      },
+      error: (error) => {
+        console.error('Error loading users:', error);
+      }
+    });
+  }
+
+  submitUserForm() {
+    this.submitted = true;
+    this.userData.name = this.username;
+  }
+}
