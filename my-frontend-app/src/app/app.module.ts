@@ -1,20 +1,21 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';  // Import FormsModule
 import { HttpClientModule } from '@angular/common/http';
+
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { UserComponent } from './components/user/user.component';
-import { CommonModule } from '@angular/common';
+import { LoginComponent } from './components/login/login.component';
 
-// Define your routes here
 const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'user', component: UserComponent }
+  { path: 'user', component: UserComponent },
+  { path: 'login', component: LoginComponent }
 ];
 
 @NgModule({
@@ -22,16 +23,14 @@ const routes: Routes = [
     AppComponent,
     HomeComponent,
     DashboardComponent,
-    // If UserComponent is standalone, don't declare it here
-    // UserComponent,
+    UserComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
-    CommonModule,
-    RouterModule.forRoot(routes),
-    ReactiveFormsModule,
-    FormsModule,  // Add FormsModule here
-    HttpClientModule
+    FormsModule,
+    HttpClientModule,
+    RouterModule.forRoot(routes)
   ],
   providers: [],
   bootstrap: [AppComponent]
