@@ -1,5 +1,11 @@
 <div class="container mt-5">
     <h2>User Page</h2>
+    
+    <!-- Debug info -->
+    <div class="alert alert-info">
+      <p>Component loaded successfully!</p>
+    </div>
+    
     <form (submit)="submitUserForm()">
       <div class="mb-3">
         <label for="username" class="form-label">Enter Your Name</label>
@@ -11,5 +17,18 @@
     <div *ngIf="submitted" class="alert alert-success mt-3">
       <p>Welcome, {{ username }}!</p>
     </div>
+    
+    <div class="mt-4">
+      <h3>User List</h3>
+      <div *ngIf="users.length > 0; else noUsers">
+        <ul class="list-group">
+          <li *ngFor="let user of users" class="list-group-item">
+            {{ user.name }} (ID: {{ user.id }})
+          </li>
+        </ul>
+      </div>
+      <ng-template #noUsers>
+        <p class="text-muted">No users available.</p>
+      </ng-template>
+    </div>
   </div>
-  
