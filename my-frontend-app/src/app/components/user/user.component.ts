@@ -1,28 +1,41 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss'],
-  imports: [CommonModule, FormsModule],
-  standalone: true
+  standalone: true,
+  imports: [CommonModule, FormsModule]
 })
 export class UserComponent implements OnInit {
   username: string = '';
   submitted: boolean = false;
-  userData: any = {};  // Initialize userData
+  userData: any = {};
+  users: any[] = [];
 
-  constructor() { }
+  constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
+    this.loadUsers();
+  }
+
+  loadUsers(): void {
+    this.dataService.getUsers().subscribe({
+      next: (data) => {
+        this.users = data;
+        console.log('Users loaded:', this.users);
+      },
+      error: (error) => {
+        console.error('Error loading users:', error);
+      }
+    });
   }
 
   submitUserForm() {
     this.submitted = true;
-    // You can add additional logic here if needed
-    // For example, saving the username to userData
     this.userData.name = this.username;
   }
 }
