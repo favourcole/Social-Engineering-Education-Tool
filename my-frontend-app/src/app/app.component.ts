@@ -13,19 +13,20 @@ import { CommonModule } from '@angular/common';
 })
 export class AppComponent {
   title = 'angular-app';
-  isLoginPage = false;
+  hideNavbar = false;
   
   constructor(public authService: AuthService, private router: Router) {
-    // Subscribe to router events to detect when we're on the login page
+    // Subscribe to router events to detect when we're on the login or logout page
     this.router.events.pipe(
       filter((event: Event): event is NavigationEnd => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {
-      this.isLoginPage = event.urlAfterRedirects === '/login';
+      // Hide navbar on login and logout pages
+      this.hideNavbar = event.urlAfterRedirects === '/login' || event.urlAfterRedirects === '/logout';
     });
   }
   
   logout(): void {
     this.authService.logout();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/logout']);
   }
 }
