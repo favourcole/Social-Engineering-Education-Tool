@@ -7,7 +7,8 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
+        <!-- Only show Home (dashboard) when authenticated -->
+        <li class="nav-item" *ngIf="authService.isAuthenticated()">
           <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">Home</a>
         </li>
         
