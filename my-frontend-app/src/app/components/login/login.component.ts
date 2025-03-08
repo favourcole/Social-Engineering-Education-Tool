@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
           this.loading = false;
           if (success) {
             console.log('Login successful!');
-            this.router.navigate(['/user']);
+            this.router.navigate(['/dashboard']);
           } else {
             this.loginError = true;
           }
