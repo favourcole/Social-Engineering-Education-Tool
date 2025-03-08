@@ -10,12 +10,18 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
         </li>
-        <li class="nav-item">
+        
+        <!-- Only show User when authenticated -->
+        <li class="nav-item" *ngIf="authService.isAuthenticated()">
           <a class="nav-link" routerLink="/user" routerLinkActive="active">User</a>
         </li>
+        
+        <!-- Show Login when not authenticated -->
         <li class="nav-item" *ngIf="!authService.isAuthenticated()">
           <a class="nav-link" routerLink="/login" routerLinkActive="active">Login</a>
         </li>
+        
+        <!-- Show Logout when authenticated -->
         <li class="nav-item" *ngIf="authService.isAuthenticated()">
           <a class="nav-link" href="#" (click)="logout(); $event.preventDefault()">Logout</a>
         </li>
@@ -24,7 +30,6 @@
   </div>
 </nav>
 
-<!-- Router outlet will load the selected component here -->
 <div class="container mt-4">
   <router-outlet></router-outlet>
 </div>
