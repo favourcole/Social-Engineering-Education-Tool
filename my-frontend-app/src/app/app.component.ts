@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd, Event, RouterModule } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { AuthService } from './services/auth.service';
-import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -13,8 +13,16 @@ import { CommonModule } from '@angular/common';
 })
 export class AppComponent {
   title = 'angular-app';
+  isLoginPage = false;
   
-  constructor(public authService: AuthService, private router: Router) {}
+  constructor(public authService: AuthService, private router: Router) {
+    // Subscribe to router events to detect when we're on the login page
+    this.router.events.pipe(
+      filter((event: Event): event is NavigationEnd => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      this.isLoginPage = event.urlAfterRedirects === '/login';
+    });
+  }
   
   logout(): void {
     this.authService.logout();
