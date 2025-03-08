@@ -1,40 +1,48 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule]
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  loginForm: FormGroup = new FormGroup({
-    username: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    password: new FormControl('', [Validators.required, Validators.minLength(6)])
-  });
+  @ViewChild('usernameInput') usernameInput!: ElementRef;
+  @ViewChild('passwordInput') passwordInput!: ElementRef;
   
-  submitted = false; // Add this property
+  submitted = false;
+  loading = false;
+  loginError = false;
   
   constructor(private authService: AuthService, private router: Router) {}
 
-  ngOnInit(): void {
-    // Initialization moved to the property declaration
-  }
+  ngOnInit(): void {}
 
   onSubmit(): void {
-    this.submitted = true; // Set to true when form is submitted
+    this.submitted = true;
+    const username = this.usernameInput.nativeElement.value;
+    const password = this.passwordInput.nativeElement.value;
     
-    if (this.loginForm.valid) {
-      const username = this.loginForm.get('username')?.value;
-      const password = this.loginForm.get('password')?.value;
+    if (username && password) {
+      this.loading = true;
+      this.loginError = false;
       
-      if (this.authService.login(username, password)) {
-        this.router.navigate(['/user']);
-      }
+      this.authService.login(username, password).subscribe({
+        next: (success) => {
+          this.loading = false;
+          if (success) {
+            console.log('Login successful!');
+            this.router.navigate(['/user']);
+          } else {
+            this.loginError = true;
+          }
+        },
+        error: () => {
+          this.loading = false;
+          this.loginError = true;
+        }
+      });
     }
   }
 }
