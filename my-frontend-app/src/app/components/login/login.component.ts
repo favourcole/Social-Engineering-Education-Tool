@@ -10,15 +10,14 @@ import { AuthService } from '../../services/auth.service';
 export class LoginComponent implements OnInit {
   @ViewChild('usernameInput') usernameInput!: ElementRef;
   @ViewChild('passwordInput') passwordInput!: ElementRef;
-  
   submitted = false;
   loading = false;
   loginError = false;
   
   constructor(private authService: AuthService, private router: Router) {}
-
+  
   ngOnInit(): void {}
-
+  
   onSubmit(): void {
     this.submitted = true;
     const username = this.usernameInput.nativeElement.value;
@@ -44,5 +43,10 @@ export class LoginComponent implements OnInit {
         }
       });
     }
+  }
+  
+  // Add this new method for signup navigation
+  navigateToSignup(): void {
+    this.router.navigate(['/signup']);
   }
 }
