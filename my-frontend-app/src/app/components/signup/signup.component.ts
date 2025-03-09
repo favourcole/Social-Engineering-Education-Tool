@@ -20,10 +20,11 @@ export class SignupComponent {
     const email = this.emailInput.nativeElement.value;
     const password = this.passwordInput.nativeElement.value;
     
-    // Add your registration logic here
     console.log('Registration data:', { firstname, lastname, email, password });
-    
-    // Redirect to login after registration
+    this.router.navigate(['/login']);
+  }
+  
+  navigateToLogin(): void {
     this.router.navigate(['/login']);
   }
 }
