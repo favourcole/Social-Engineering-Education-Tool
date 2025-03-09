@@ -1,0 +1,52 @@
+<div class="auth-container">
+    <div class="auth-card">
+      <div class="auth-header">
+        <p class="account-text">Have an account? <a routerLink="/login" class="auth-link">Login</a></p>
+        <h1 class="auth-title">Sign Up</h1>
+      </div>
+      
+      <form (submit)="onSubmit()">
+        <div class="form-row">
+          <div class="form-group half">
+            <div class="input-group">
+              <span class="input-icon">👤</span>
+              <input type="text" #firstnameInput placeholder="Firstname" class="form-control" required>
+            </div>
+          </div>
+          
+          <div class="form-group half">
+            <div class="input-group">
+              <span class="input-icon">👤</span>
+              <input type="text" #lastnameInput placeholder="Lastname" class="form-control" required>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-icon">✉️</span>
+            <input type="email" #emailInput placeholder="Email" class="form-control" required>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-icon">🔒</span>
+            <input type="password" #passwordInput placeholder="Password" class="form-control" required>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <button type="submit" class="auth-button">Register</button>
+        </div>
+        
+        <div class="form-footer">
+          <div class="remember-me">
+            <input type="checkbox" id="remember-me">
+            <label for="remember-me">Remember Me</label>
+          </div>
+          <a href="#" class="terms-link">Terms & conditions</a>
+        </div>
+      </form>
+    </div>
+  </div>
